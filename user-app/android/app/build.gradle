@@ -35,11 +35,6 @@ android {
         abortOnError false
         checkReleaseBuilds false
     }
-    tasks.withType(Queue).configureEach {
-        if (it.name.contains("checkReleaseAarMetadata")) {
-            it.enabled = false
-        }
-    }
     buildTypes {
         release {
             minifyEnabled false
