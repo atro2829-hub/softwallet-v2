@@ -30,9 +30,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 21
-          cache: gradle
-          cache-dependency-path: user-app/android/.gradle
+          java-version: '17'
 
       - name: Build APK (user-app)
         run: |
@@ -71,9 +69,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 21
-          cache: gradle
-          cache-dependency-path: admin-app/android/.gradle
+          java-version: '17'
 
       - name: Build APK (admin-app)
         run: |
