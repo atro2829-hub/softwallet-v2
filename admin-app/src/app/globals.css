@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  --color-charcoal-900: #1A1A1A;
+  --color-charcoal-800: #2A2A2A;
+  --color-charcoal-700: #333333;
+  --color-charcoal-600: #444444;
+  --color-charcoal-500: #666666;
+  --color-charcoal-400: #888888;
+  --color-charcoal-300: #AAAAAA;
+  --color-charcoal-200: #CCCCCC;
+  --color-charcoal-100: #E5E5E5;
+  --color-charcoal-50: #F5F5F5;
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+  --color-info: #3B82F6;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 3px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans Arabic', 'Tahoma', sans-serif;
+  background: #ffffff;
+  color: #1A1A1A;
+}
+
+input, textarea, select, button {
+  font-family: inherit;
+}

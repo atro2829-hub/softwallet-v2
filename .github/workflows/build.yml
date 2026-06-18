@@ -1,0 +1,88 @@
+name: Build Android APKs
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-user-app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: user-app/package-lock.json
+
+      - name: Install dependencies (user-app)
+        run: cd user-app && npm ci
+
+      - name: Build Next.js (user-app)
+        run: cd user-app && npm run build
+
+      - name: Sync Capacitor (user-app)
+        run: cd user-app && npx cap sync android
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+          cache-dependency-path: user-app/android/.gradle
+
+      - name: Build APK (user-app)
+        run: |
+          cd user-app/android
+          chmod +x gradlew
+          ./gradlew assembleRelease -PMYAPP_UPLOAD_STORE_FILE=../../softwallet.keystore -PMYAPP_UPLOAD_STORE_PASSWORD=softwallet123 -PMYAPP_UPLOAD_KEY_ALIAS=softwallet -PMYAPP_UPLOAD_KEY_PASSWORD=softwallet123
+
+      - name: Upload user-app APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: user-app-release
+          path: user-app/android/app/build/outputs/apk/release/*.apk
+
+  build-admin-app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: admin-app/package-lock.json
+
+      - name: Install dependencies (admin-app)
+        run: cd admin-app && npm ci
+
+      - name: Build Next.js (admin-app)
+        run: cd admin-app && npm run build
+
+      - name: Sync Capacitor (admin-app)
+        run: cd admin-app && npx cap sync android
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+          cache-dependency-path: admin-app/android/.gradle
+
+      - name: Build APK (admin-app)
+        run: |
+          cd admin-app/android
+          chmod +x gradlew
+          ./gradlew assembleRelease -PMYAPP_UPLOAD_STORE_FILE=../../softwallet.keystore -PMYAPP_UPLOAD_STORE_PASSWORD=softwallet123 -PMYAPP_UPLOAD_KEY_ALIAS=softwallet -PMYAPP_UPLOAD_KEY_PASSWORD=softwallet123
+
+      - name: Upload admin-app APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: admin-app-release
+          path: admin-app/android/app/build/outputs/apk/release/*.apk
