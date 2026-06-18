@@ -30,7 +30,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '22'
+          java-version: '24'
 
       - name: Build APK (user-app)
         run: |
@@ -69,7 +69,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '22'
+          java-version: '24'
 
       - name: Build APK (admin-app)
         run: |
