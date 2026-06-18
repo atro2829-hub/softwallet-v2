@@ -18,10 +18,17 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file(MYAPP_UPLOAD_STORE_FILE ?: '../../softwallet.keystore')
-            storePassword MYAPP_UPLOAD_STORE_PASSWORD ?: 'softwallet123'
-            keyAlias MYAPP_UPLOAD_KEY_ALIAS ?: 'softwallet'
-            keyPassword MYAPP_UPLOAD_KEY_PASSWORD ?: 'softwallet123'
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                storeFile file(project.MYAPP_UPLOAD_STORE_FILE)
+                storePassword project.MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias project.MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword project.MYAPP_UPLOAD_KEY_PASSWORD
+            } else {
+                storeFile file('../../softwallet.keystore')
+                storePassword 'softwallet123'
+                keyAlias 'softwallet'
+                keyPassword 'softwallet123'
+            }
         }
     }
     buildTypes {
